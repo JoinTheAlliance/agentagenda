@@ -1,4 +1,4 @@
-# autotask
+# easytask
 
 A simple task manager for your agent. Give it a goal, get a task with a plan and steps.
 
@@ -6,20 +6,20 @@ A simple task manager for your agent. Give it a goal, get a task with a plan and
 
 ## Who is this for?
 
-While you can use autotask from the command line, or integrate it into other types of applications, it is primarily useful for autonomous agents and generative AI applications which need to keep track of tasks.
+While you can use easytask from the command line, or integrate it into other types of applications, it is primarily useful for autonomous agents and generative AI applications which need to keep track of tasks.
 
 ## Installation
 
 ```bash
-pip install autotask
+pip install easytask
 ```
 
 ## Quickstart
 
-Here's a basic example of how to use autotask:
+Here's a basic example of how to use easytask:
 
 ```python
-from autotask import create_task, finish_task
+from easytask import create_task, finish_task
 
 # Create a new task
 task = create_task("Write README.md file")

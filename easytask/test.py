@@ -1,7 +1,7 @@
 from datetime import datetime
 import json
 from agentmemory import create_memory, get_memories, get_memory, wipe_category
-from autotask import (
+from easytask import (
     create_task,
     delete_task,
     list_tasks,
