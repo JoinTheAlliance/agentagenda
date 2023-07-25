@@ -33,9 +33,9 @@ This will create a new task with the goal "Write README.md file", and then mark 
 
 ## Documentation
 
-**`create_task(goal: str, plan: str = None) -> dict`**
+**`create_task(goal: str, plan: str = None, steps: dict = None) -> dict`**
 
-    Creates a new task based on the given goal and plan. If no plan is provided, a plan will be generated based on the goal. Returns a dictionary representing the task.
+    Creates a new task based on the given goal, as well as plan and steps optionally. If no plan or steps are provided they will be generated based on the goal. Returns a dictionary representing the task.
 
     *Example:*
 

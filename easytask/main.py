@@ -53,19 +53,19 @@ step_creation_function = compose_function(
 debug = os.environ.get("DEBUG", False)
 
 
-def create_task(goal, plan=None):
+def create_task(goal, plan=None, steps=None):
     if plan is None:
         log("Creating plan for goal: {}".format(goal), log=debug)
         plan = create_plan(goal)
+    if steps is None:
+        response = openai_function_call(
+            text=compose_prompt(step_creation_prompt, {"goal": goal, "plan": plan}),
+            functions=[step_creation_function],
+            function_call="create_steps",
+            debug=debug,
+        )
 
-    response = openai_function_call(
-        text=compose_prompt(step_creation_prompt, {"goal": goal, "plan": plan}),
-        functions=[step_creation_function],
-        function_call="create_steps",
-        debug=debug,
-    )
-
-    steps = response["arguments"]["steps"]
+        steps = response["arguments"]["steps"]
 
     # if steps is a dict, json stringify it
     if isinstance(steps, dict) or isinstance(steps, list):
