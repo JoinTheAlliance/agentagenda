@@ -20,7 +20,7 @@ setup(
     author="Moon",
     author_email="shawmakesmagic@gmail.com",
     license="MIT",
-    packages=["autotask"],
+    packages=["easycompletion", "agentmemory", "agentlogger"],
     install_requires=[""],
     readme="README.md",
     classifiers=[

@@ -50,9 +50,10 @@ step_creation_function = compose_function(
     },
 )
 
+debug = os.environ.get("DEBUG", False)
+
 
 def create_task(goal, plan=None):
-    debug = os.environ.get("DEBUG", False)
     if plan is None:
         log("Creating plan for goal: {}".format(goal), log=debug)
         plan = create_plan(goal)
@@ -98,7 +99,7 @@ def list_tasks():
 def search_tasks(search_term):
     # return tasks whose goal is most relevant to the search term
     memories = search_memory("task", search_term)
-    log("Found {} tasks".format(len(memories)))
+    log("Found {} tasks".format(len(memories)), log=debug)
     return memories
 
 
@@ -112,17 +113,17 @@ def get_task_id(task):
 
 
 def delete_task(task):
-    log("Deleting task: {}".format(task))
+    log("Deleting task: {}".format(task), log=debug)
     return delete_memory("task", get_task_id(task))
 
 
 def finish_task(task):
-    log("Finishing task: {}".format(task))
+    log("Finishing task: {}".format(task), log=debug)
     return update_memory("task", get_task_id(task), metadata={"status": "complete"})
 
 
 def cancel_task(task):
-    log("Cancelling task: {}".format(task))
+    log("Cancelling task: {}".format(task), log=debug)
     return update_memory("task", get_task_id(task), metadata={"status": "cancelled"})
 
 
@@ -133,7 +134,7 @@ def get_last_created_task():
     sorted_tasks = sorted(
         tasks, key=lambda x: x["metadata"]["created_at"], reverse=True
     )
-    log("Last created task: {}".format(len(sorted_tasks)))
+    log("Last created task: {}".format(len(sorted_tasks)), log=debug)
     return sorted_tasks[0] if sorted_tasks else None
 
 
@@ -144,14 +145,17 @@ def get_last_updated_task():
     sorted_tasks = sorted(
         tasks, key=lambda x: x["metadata"]["updated_at"], reverse=True
     )
+    log("Last updated task: {}".format(len(sorted_tasks)), log=debug)
     return sorted_tasks[0] if sorted_tasks else None
 
 
 def get_current_task():
     memory = get_memories("task", filter_metadata={"current": True})
     if len(memory) > 0:
+        log("Current task: {}".format(memory[0]), log=debug)
         return memory[0]
     else:
+        log("No current task found", log=debug)
         return None
 
 
@@ -162,27 +166,32 @@ def set_current_task(task):
 
     for memory in memories:
         update_memory("task", memory["id"], metadata={"current": False})
-
+    log("Setting current task: {}".format(task), log=debug)
     return update_memory("task", task_id, metadata={"current": True})
 
 
 # Plans
 def create_plan(goal):
-    response = openai_text_call(compose_prompt(planning_prompt, {"goal": goal}))
+    response = openai_text_call(
+        compose_prompt(planning_prompt, {"goal": goal}), debug=debug
+    )
     return response["text"]
 
 
 def update_plan(task, plan):
     task_id = get_task_id(task)
-    return update_memory("task", task_id, metadata={"plan": plan})
+    log("Updating plan for task: {}".format(task), log=debug)
+    update_memory("task", task_id, metadata={"plan": plan})
 
 
 # Create Steps
 def create_steps(goal, plan):
+    log("Creating steps for goal: {}".format(goal), log=debug)
     response = openai_function_call(
         text=compose_prompt(step_creation_prompt, {"goal": goal, "plan": plan}),
         functions=[step_creation_function],
         function_call="create_steps",
+        debug=debug,
     )
     return response["arguments"]["steps"]
 
@@ -191,6 +200,7 @@ def create_steps(goal, plan):
 def create_step(goal, steps, plan):
     steps.append({"content": goal, "completed": False})
     update_plan(goal, steps, plan)
+    log("Creating step for goal: {}".format(goal), log=debug)
     return steps
 
 
@@ -206,6 +216,7 @@ def update_step(task, step):
             s["completed"] = step["completed"]
 
     steps = json.dumps(steps)
+    log("Updating step for task: {}\nSteps are: {}".format(task, steps), log=debug)
     return update_memory("task", task_id, metadata={"steps": steps})
 
 
@@ -217,6 +228,7 @@ def add_step(task, step):
     steps = json.loads(steps)
     steps.append({"content": step, "completed": False})
     steps = json.dumps(steps)
+    log("Adding step for task: {}\nSteps are: {}".format(task, steps), log=debug)
     return update_memory("task", task_id, metadata={"steps": steps})
 
 
@@ -230,6 +242,7 @@ def finish_step(task, step):
         if s["content"] == step:
             s["completed"] = True
     steps = json.dumps(steps)
+    log("Finishing step for task: {}\nSteps are: {}".format(task, steps), log=debug)
     return update_memory("task", task_id, metadata={"steps": steps})
 
 
@@ -241,4 +254,5 @@ def cancel_step(task, step):
     steps = json.loads(steps)
     steps = [s for s in steps if s["content"] != step]
     steps = json.dumps(steps)
+    log("Cancelling step for task: {}\nSteps are: {}".format(task, steps), log=debug)
     return update_memory("task", task_id, metadata={"steps": steps})
