@@ -23,3 +23,5 @@ jobs:
       run: |
         pytest easytask/test.py
         pytest easytask/test_async.py
+      env:
+        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
