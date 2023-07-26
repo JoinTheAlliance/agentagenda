@@ -104,7 +104,8 @@ def test_list_tasks():
     task = setup()
     tasks = list_tasks()
     assert isinstance(tasks, list)
-    assert task in tasks
+    # check that the task document is in the list of tasks' docments
+    assert task['document'] in [task['document'] for task in tasks]
     teardown()
 
 

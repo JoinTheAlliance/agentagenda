@@ -91,14 +91,16 @@ def create_task(goal, plan=None, steps=None):
 
 def list_tasks():
     debug = os.environ.get("DEBUG", False)
-    memories = get_memories("task", filter_metadata={"status": "in progress"})
+    memories = get_memories(
+        "task", filter_metadata={"status": "in progress"}, include_embeddings=False
+    )
     log("Found {} tasks".format(len(memories)), log=debug)
     return memories
 
 
 def search_tasks(search_term):
     # return tasks whose goal is most relevant to the search term
-    memories = search_memory("task", search_term)
+    memories = search_memory("task", search_term, include_embeddings=False, include_distances=False)
     log("Found {} tasks".format(len(memories)), log=debug)
     return memories
 
@@ -130,7 +132,7 @@ def cancel_task(task):
 # Get Last Created Task
 def get_last_created_task():
     # return the task with the most recent created_at date
-    tasks = get_memories("task")
+    tasks = get_memories("task", include_embeddings=False)
     sorted_tasks = sorted(
         tasks, key=lambda x: x["metadata"]["created_at"], reverse=True
     )
@@ -141,7 +143,7 @@ def get_last_created_task():
 # Get Last Updated Task
 def get_last_updated_task():
     # return the task with the most recent updated_at date
-    tasks = get_memories("task")
+    tasks = get_memories("task", include_embeddings=False)
     sorted_tasks = sorted(
         tasks, key=lambda x: x["metadata"]["updated_at"], reverse=True
     )
@@ -150,7 +152,9 @@ def get_last_updated_task():
 
 
 def get_current_task():
-    memory = get_memories("task", filter_metadata={"current": True})
+    memory = get_memories(
+        "task", filter_metadata={"current": True}, include_embeddings=False
+    )
     if len(memory) > 0:
         log("Current task: {}".format(memory[0]), log=debug)
         return memory[0]
@@ -162,7 +166,9 @@ def get_current_task():
 def set_current_task(task):
     task_id = get_task_id
 
-    memories = get_memories("task", filter_metadata={"current": True})
+    memories = get_memories(
+        "task", filter_metadata={"current": True}, include_embeddings=False
+    )
 
     for memory in memories:
         update_memory("task", memory["id"], metadata={"current": False})
