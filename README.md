@@ -182,17 +182,6 @@ This will create a new task with the goal "Write README.md file", and then mark 
     print(steps)
     ```
 
-**`create_step(goal: str, steps: list, plan: str) -> list`**
-
-    Adds a new step to the given steps based on the goal, and updates the plan. Returns the updated steps.
-
-    *Example:*
-
-    ```python
-    steps = create_step("New step for the project", steps, "Plan for the project")
-    print(steps)
-    ```
-
 **`update_step(task: Union[dict, int, str], step: dict) -> dict`**
 
     Updates the specified step of the specified task. The task can be specified as a dictionary (as returned by `create_task`), an integer ID, or a string ID.
@@ -232,6 +221,28 @@ This will create a new task with the goal "Write README.md file", and then mark 
 
     ```python
     cancel_step(task, "Step to cancel")
+    ```
+
+**`get_task_as_formatted_string(task: dict, include_plan: bool = True, include_status: bool = True, include_steps: bool = True) -> str`**
+
+    Returns a string representation of the task, including the plan, status, and steps based on the arguments provided.
+
+    *Example:*
+
+    ```python
+    task_string = get_task_as_formatted_string(task, include_plan=True, include_status=True, include_steps=True)
+    print(task_string)
+    ```
+
+**`list_tasks_as_formatted_string() -> str`**
+
+    Retrieves and formats a list of all current tasks. Returns a string containing details of all current tasks.
+
+    *Example:*
+
+    ```python
+    tasks_string = list_tasks_as_formatted_string()
+    print(tasks_string)
     ```
 
 # Contributions Welcome

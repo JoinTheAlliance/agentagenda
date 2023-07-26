@@ -15,6 +15,7 @@ from easytask import (
     finish_step,
     cancel_step,
 )
+from easytask.main import get_next_step, get_task_as_formatted_string, list_tasks_as_formatted_string
 
 goal = "Make a balogna sandwich"
 
@@ -154,6 +155,8 @@ def test_update_plan():
     plan = "New plan"
     update_plan(task, plan)
     updated_task = get_memory("task", task["id"])
+    print('updated_task')
+    print(updated_task)
     assert updated_task["metadata"]["plan"] == plan
     teardown()
 
@@ -198,3 +201,83 @@ def test_cancel_step():
     step_data = next((s for s in updated_steps if s["content"] == step), None)
     assert step_data == None
     teardown()
+
+
+def test_get_next_step():
+    task = {
+        "metadata": {
+            "steps": json.dumps(
+                [
+                    {"content": "Step 1", "completed": False},
+                    {"content": "Step 2", "completed": False},
+                ]
+            )
+        }
+    }
+
+    next_step = get_next_step(task)
+    assert next_step == {"content": "Step 1", "completed": False}
+
+
+def test_get_task_as_formatted_string():
+    task = {
+        "metadata": {
+            "plan": "Plan 1",
+            "status": "in_progress",
+            "steps": json.dumps(
+                [
+                    {"content": "Step 1", "completed": False},
+                    {"content": "Step 2", "completed": False},
+                ]
+            ),
+        }
+    }
+
+    task_string = get_task_as_formatted_string(task)
+    expected_string = (
+        "Plan: Plan 1\n"
+        "Status: in_progress\n"
+        "Steps: Step 1: Not completed, Step 2: Not completed"
+    )
+    assert task_string == expected_string
+
+
+def test_list_tasks_as_formatted_string():
+    # Setup: Create multiple tasks
+    tasks = [
+        {
+            "plan": "Plan 1",
+            "status": "in_progress",
+            "steps": json.dumps([
+                {"content": "Step 1", "completed": False},
+                {"content": "Step 2", "completed": False}
+            ])
+        },
+        {
+            "plan": "Plan 2",
+            "status": "Completed",
+            "steps": json.dumps([
+                {"content": "Step 3", "completed": True},
+                {"content": "Step 4", "completed": True}
+            ])
+        },
+    ]
+    for task in tasks:
+        create_task("some goal", task["plan"], task["steps"])
+
+    tasks = get_memories("task", unique=False)
+
+    # Execute
+    tasks_string = list_tasks_as_formatted_string()
+
+    # Check if tasks_string includes all tasks
+    for task in tasks:
+        task_string = get_task_as_formatted_string(task)
+        print("*** task_string is")
+        print(task_string)
+        print("***  tasks_string")
+        print(tasks_string)
+        assert task_string in tasks_string
+
+    # Teardown: Remove all tasks
+    wipe_category("task")
