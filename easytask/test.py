@@ -72,7 +72,7 @@ def setup():
         "goal": goal,
         "plan": plan,
         "steps": steps,
-        "status": "in progress",
+        "status": "in_progress",
     }
 
     create_memory("task", goal, metadata=task)
@@ -96,7 +96,7 @@ def test_create_task():
     assert "plan" in task["metadata"]
     assert "steps" in task["metadata"]
     assert "status" in task["metadata"]
-    assert task["metadata"]["status"] == "in progress"
+    assert task["metadata"]["status"] == "in_progress"
     teardown()
 
 
@@ -105,7 +105,7 @@ def test_list_tasks():
     tasks = list_tasks()
     assert isinstance(tasks, list)
     # check that the task document is in the list of tasks' docments
-    assert task['document'] in [task['document'] for task in tasks]
+    assert task["document"] in [task["document"] for task in tasks]
     teardown()
 
 

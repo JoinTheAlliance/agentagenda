@@ -81,7 +81,7 @@ def create_task(goal, plan=None, steps=None):
         "goal": goal,
         "plan": plan,
         "steps": steps,
-        "status": "in progress",
+        "status": "in_progress",
     }
 
     create_memory("task", goal, metadata=task)
@@ -89,18 +89,24 @@ def create_task(goal, plan=None, steps=None):
     return
 
 
-def list_tasks():
+def list_tasks(status="in_progress"):
     debug = os.environ.get("DEBUG", False)
     memories = get_memories(
-        "task", filter_metadata={"status": "in progress"}, include_embeddings=False
+        "task", filter_metadata={"status": status}, include_embeddings=False
     )
     log("Found {} tasks".format(len(memories)), log=debug)
     return memories
 
 
-def search_tasks(search_term):
+def search_tasks(search_term, status="in_progress"):
     # return tasks whose goal is most relevant to the search term
-    memories = search_memory("task", search_term, include_embeddings=False, include_distances=False)
+    memories = search_memory(
+        "task",
+        search_term,
+        filter_metadata={"status": "in_progress"},
+        include_embeddings=False,
+        include_distances=False,
+    )
     log("Found {} tasks".format(len(memories)), log=debug)
     return memories
 
