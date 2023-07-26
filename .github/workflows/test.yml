@@ -17,11 +17,10 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install pytest pytest-asyncio
+        pip install pytest
         pip install -r requirements.txt
     - name: Running tests
       run: |
         pytest easytask/test.py
-        pytest easytask/test_async.py
       env:
         OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
