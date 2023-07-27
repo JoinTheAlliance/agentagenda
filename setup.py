@@ -20,8 +20,8 @@ setup(
     author="Moon",
     author_email="shawmakesmagic@gmail.com",
     license="MIT",
-    packages=["easycompletion", "agentmemory", "agentlogger"],
-    install_requires=[""],
+    packages=["easytask"],
+    install_requires=["easycompletion", "agentmemory", "agentlogger"],
     readme="README.md",
     classifiers=[
         "Development Status :: 2 - Pre-Alpha",
