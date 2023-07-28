@@ -1,6 +1,6 @@
 # agentagenda <a href="https://discord.gg/qetWd7J9De"><img style="float: right" src="https://dcbadge.vercel.app/api/server/qetWd7J9De" alt=""></a>
 
-A simple task manager for your agent. Give it a goal, get a task with a plan and steps.
+An agenda and task manager for your agent.
 
 <img src="resources/image.jpg">
 
