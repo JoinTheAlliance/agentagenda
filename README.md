@@ -1,8 +1,11 @@
-# easytask
+# easytask <a href="https://discord.gg/qetWd7J9De"><img style="float: right" src="https://dcbadge.vercel.app/api/server/qetWd7J9De" alt=""></a>
 
 A simple task manager for your agent. Give it a goal, get a task with a plan and steps.
 
 <img src="resources/image.jpg">
+
+[![Lint and Test](https://github.com/AutonomousResearchGroup/easytask/actions/workflows/test.yml/badge.svg)](https://github.com/AutonomousResearchGroup/easytask/actions/workflows/test.yml)
+[![PyPI version](https://badge.fury.io/py/easytask.svg)](https://badge.fury.io/py/easytask)
 
 ## Who is this for?
 
