@@ -1,16 +1,16 @@
-# easytask <a href="https://discord.gg/qetWd7J9De"><img style="float: right" src="https://dcbadge.vercel.app/api/server/qetWd7J9De" alt=""></a>
+# agentagenda <a href="https://discord.gg/qetWd7J9De"><img style="float: right" src="https://dcbadge.vercel.app/api/server/qetWd7J9De" alt=""></a>
 
 A simple task manager for your agent. Give it a goal, get a task with a plan and steps.
 
 <img src="resources/image.jpg">
 
-[![Lint and Test](https://github.com/AutonomousResearchGroup/easytask/actions/workflows/test.yml/badge.svg)](https://github.com/AutonomousResearchGroup/easytask/actions/workflows/test.yml)
-[![PyPI version](https://badge.fury.io/py/easytask.svg)](https://badge.fury.io/py/easytask)
+[![Lint and Test](https://github.com/AutonomousResearchGroup/agentagenda/actions/workflows/test.yml/badge.svg)](https://github.com/AutonomousResearchGroup/agentagenda/actions/workflows/test.yml)
+[![PyPI version](https://badge.fury.io/py/agentagenda.svg)](https://badge.fury.io/py/agentagenda)
 
 ## Installation
 
 ```bash
-pip install easytask
+pip install agentagenda
 ```
 
 ## Quickstart
@@ -18,7 +18,7 @@ pip install easytask
 This will create a new task with the goal "Write README.md file", and then mark it as completed.
 
 ```python
-from easytask import create_task, finish_task
+from agentagenda import create_task, finish_task
 
 # Create a new task
 task = create_task("Write README.md file")

@@ -1,7 +1,7 @@
 from datetime import datetime
 import json
 from agentmemory import create_memory, get_memories, get_memory, wipe_category
-from easytask import (
+from agentagenda import (
     create_task,
     delete_task,
     list_tasks,
@@ -15,7 +15,7 @@ from easytask import (
     finish_step,
     cancel_step,
 )
-from easytask.main import get_next_step, get_task_as_formatted_string, list_tasks_as_formatted_string
+from agentagenda.main import get_next_step, get_task_as_formatted_string, list_tasks_as_formatted_string
 
 goal = "Make a balogna sandwich"
 

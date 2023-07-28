@@ -1,1 +1,1 @@
-from easytask.test import *
+from agentagenda.test import *

@@ -11,16 +11,16 @@ with open("README.md", "r") as fh:
 
 
 setup(
-    name="easytask",
+    name="agentagenda",
     version="0.0.5",
     description="A task manager for your agent.",
     long_description=long_description,  # added this line
     long_description_content_type="text/markdown",  # and this line
-    url="https://github.com/AutonomousResearchGroup/easytask",
+    url="https://github.com/AutonomousResearchGroup/agentagenda",
     author="Moon",
     author_email="shawmakesmagic@gmail.com",
     license="MIT",
-    packages=["easytask"],
+    packages=["agentagenda"],
     install_requires=["easycompletion", "agentmemory", "agentlogger"],
     readme="README.md",
     classifiers=[
