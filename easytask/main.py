@@ -96,9 +96,7 @@ def create_task(goal, plan=None, steps=None, model="gpt-3.5-turbo-0613"):
         "status": "in_progress",
     }
 
-    create_memory("task", goal, metadata=task)
-
-    return
+    return create_memory("task", goal, metadata=task)
 
 
 def list_tasks(status="in_progress"):
@@ -385,7 +383,10 @@ def update_step(task, step):
 
     metadata["steps"] = json.dumps(metadata["steps"])
     metadata["updated_at"] = datetime.timestamp(datetime.now())
-    log("Updating step for task: {}\nSteps are: {}".format(task, metadata["steps"]), log=debug)
+    log(
+        "Updating step for task: {}\nSteps are: {}".format(task, metadata["steps"]),
+        log=debug,
+    )
     return update_memory("task", task_id, metadata=metadata)
 
 
@@ -411,7 +412,10 @@ def add_step(task, step):
     steps = json.loads(metadata["steps"])
     steps.append({"content": step, "completed": False})
     metadata["steps"] = json.dumps(steps)
-    log("Adding step for task: {}\nSteps are: {}".format(task, metadata["steps"]), log=debug)
+    log(
+        "Adding step for task: {}\nSteps are: {}".format(task, metadata["steps"]),
+        log=debug,
+    )
     metadata["updated_at"] = datetime.timestamp(datetime.now())
     return update_memory("task", task_id, metadata=metadata)
 
@@ -440,7 +444,10 @@ def finish_step(task, step):
         if s["content"] == step:
             s["completed"] = True
     metadata["steps"] = json.dumps(steps)
-    log("Finishing step for task: {}\nSteps are: {}".format(task, metadata["steps"]), log=debug)
+    log(
+        "Finishing step for task: {}\nSteps are: {}".format(task, metadata["steps"]),
+        log=debug,
+    )
     metadata["updated_at"] = datetime.timestamp(datetime.now())
     return update_memory("task", task_id, metadata=metadata)
 
@@ -469,7 +476,10 @@ def cancel_step(task, step):
     steps = [s for s in steps if s["content"] != step]
     metadata["steps"] = json.dumps(steps)
     metadata["updated_at"] = datetime.timestamp(datetime.now())
-    log("Cancelling step for task: {}\nSteps are: {}".format(task, metadata["steps"]), log=debug)
+    log(
+        "Cancelling step for task: {}\nSteps are: {}".format(task, metadata["steps"]),
+        log=debug,
+    )
     return update_memory("task", task_id, metadata=metadata)
 
 
