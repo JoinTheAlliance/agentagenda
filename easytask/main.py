@@ -96,7 +96,7 @@ def create_task(goal, plan=None, steps=None, model="gpt-3.5-turbo-0613"):
         "status": "in_progress",
     }
 
-    return create_memory("task", goal, metadata=task)
+    return get_task_by_id(create_memory("task", goal, metadata=task))
 
 
 def list_tasks(status="in_progress"):
@@ -249,6 +249,25 @@ def get_last_updated_task():
     )
     log("Last updated task: {}".format(len(sorted_tasks)), log=debug)
     return sorted_tasks[0] if sorted_tasks else None
+
+
+def get_task_by_id(task_id):
+    """
+    Get a task by its ID.
+
+    Parameters
+    ----------
+    task_id : str
+        The ID of the task to retrieve.
+
+    Returns
+    -------
+    dict or None
+        The task with the given ID. If no task is found, None is returned.
+    """
+    memory = get_memory("task", task_id)
+    log("Task with ID {}: {}".format(task_id, memory), log=debug)
+    return memory
 
 
 def get_current_task():
