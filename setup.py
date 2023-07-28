@@ -12,7 +12,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name="easytask",
-    version="0.0.1",
+    version="0.0.3",
     description="A task manager for your agent.",
     long_description=long_description,  # added this line
     long_description_content_type="text/markdown",  # and this line
