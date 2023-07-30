@@ -94,6 +94,12 @@ def create_task(goal, plan=None, steps=None, model="gpt-3.5-turbo-0613"):
     created_at = datetime.timestamp(datetime.now())
     updated_at = datetime.timestamp(datetime.now())
 
+    memories = get_memories("task", filter_metadata={"current": "True"})
+    for memory in memories:
+        metadata = memory["metadata"]
+        metadata["current"] = "False"
+        update_memory("task", memory["id"], metadata=metadata)
+
     task = {
         "created_at": created_at,
         "updated_at": updated_at,
@@ -101,6 +107,7 @@ def create_task(goal, plan=None, steps=None, model="gpt-3.5-turbo-0613"):
         "plan": plan,
         "steps": steps,
         "status": "in_progress",
+        "current": "True",
     }
 
     return get_task_by_id(create_memory("task", goal, metadata=task))
@@ -191,6 +198,7 @@ def finish_task(task):
     metadata = memory["metadata"]
     metadata["status"] = "complete"
     metadata["updated_at"] = updated_at
+    metadata["current"] = "False"
 
     return update_memory(
         "task",
@@ -216,6 +224,7 @@ def cancel_task(task):
     metadata = memory["metadata"]
     metadata["status"] = "cancelled"
     metadata["updated_at"] = updated_at
+    metadata["current"] = "False"
 
     return update_memory(
         "task",
@@ -287,7 +296,7 @@ def get_current_task():
         The task marked as the current active task. If no current task is found, None is returned.
     """
     memory = get_memories(
-        "task", filter_metadata={"current": True}, include_embeddings=False
+        "task", filter_metadata={"current": "True"}, include_embeddings=False
     )
     if len(memory) > 0:
         log("Current task: {}".format(memory[0]), log=debug)
@@ -309,16 +318,16 @@ def set_current_task(task):
     task_id = get_task_id
 
     memories = get_memories(
-        "task", filter_metadata={"current": True}, include_embeddings=False
+        "task", filter_metadata={"current": "True"}, include_embeddings=False
     )
 
     for memory in memories:
         metadata = memory["metadata"]
-        metadata["current"] = False
+        metadata["current"] = "False"
         update_memory("task", memory["id"], metadata=metadata)
     log("Setting current task: {}".format(task), log=debug)
     metadata = memory["metadata"]
-    metadata["current"] = True
+    metadata["current"] = "True"
     return update_memory("task", task_id, metadata=metadata)
 
 
