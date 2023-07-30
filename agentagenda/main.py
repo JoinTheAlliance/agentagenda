@@ -476,7 +476,7 @@ def finish_step(task, step):
     metadata = task["metadata"]
     steps = json.loads(metadata["steps"])
     for s in steps:
-        if s["content"].includes(step):
+        if step.lower() in s["content"].lower() or s["content"].lower() in step.lower():
             s["completed"] = True
     metadata["steps"] = json.dumps(steps)
     log(
