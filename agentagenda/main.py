@@ -79,6 +79,13 @@ def create_task(goal, plan=None, steps=None, model="gpt-3.5-turbo-0613"):
 
         steps = response["arguments"]["steps"]
 
+        step_items = []
+
+        for step in steps:
+            step_items.append({"content": step, "completed": False})
+        
+        steps = step_items
+
     # if steps is a dict, json stringify it
     if isinstance(steps, dict) or isinstance(steps, list):
         steps = json.dumps(steps)
@@ -460,7 +467,7 @@ def finish_step(task, step):
     metadata = task["metadata"]
     steps = json.loads(metadata["steps"])
     for s in steps:
-        if s["content"] == step:
+        if s["content"].includes(step):
             s["completed"] = True
     metadata["steps"] = json.dumps(steps)
     log(
@@ -543,6 +550,7 @@ def get_task_as_formatted_string(
     if include_steps:
         # For the steps, since it's a list, we need to format each step separately
         steps = json.loads(task["metadata"]["steps"])
+
         formatted_steps = ", ".join(
             [
                 "{}: {}".format(
