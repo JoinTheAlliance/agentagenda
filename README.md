@@ -29,73 +29,97 @@ finish_task(task)
 ```
 
 ### 1. Creating a Task:
+
 To create a task, use the `create_task` method. You can optionally specify a plan and steps.
+
 ```python
 task = create_task("Finish the project", plan="Plan for the project")
 print(task)
 ```
 
 ### 2. List All Tasks:
+
 Retrieve a list of all tasks that are in progress using the `list_tasks` method.
+
 ```python
 tasks = list_tasks()
 print(tasks)
 ```
 
 ### 3. Search for Tasks:
+
 You can search for specific tasks using the `search_tasks` method.
+
 ```python
 tasks = search_tasks("project")
 print(tasks)
 ```
 
 ### 4. Deleting a Task:
+
 To delete a task, use the `delete_task` method.
+
 ```python
 delete_task(task)
 ```
 
 ### 5. Completing a Task:
+
 Mark a task as complete using the `finish_task` method.
+
 ```python
 finish_task(task)
 ```
 
 ### 6. Cancelling a Task:
+
 If you want to cancel a task, use the `cancel_task` method.
+
 ```python
 cancel_task(task)
 ```
 
 ### 7. Retrieve Task ID:
+
 To get the ID of a specific task, use the `get_task_id` method.
+
 ```python
 task_id = get_task_id(task)
 print(task_id)
 ```
 
 ### 8. Working with Plans:
+
 - To create a plan for a specific goal, use the `create_plan` method.
+
 ```python
 plan = create_plan("Finish the project")
 print(plan)
 ```
+
 - To update the plan of a specific task, use the `update_plan` method.
+
 ```python
 update_plan(task, "New plan for the project")
 ```
 
 ### 9. Working with Steps:
+
 - To create a list of steps based on a given goal and plan, use the `create_steps` method.
+
 ```python
 steps = create_steps("Finish the project", "Plan for the project")
 print(steps)
 ```
+
 - To add a new step to a task, use the `add_step` method.
+
 ```python
 add_step(task, "New step for the project")
 ```
+
 - To mark a specific step of a task as complete, use the `finish_step` method.
+
 ```python
 finish_step(task, "Step to complete")
 ```
@@ -303,14 +327,14 @@ finish_step(task, "Step to complete")
     cancel_step(task, "Step to cancel")
     ```
 
-**`get_task_as_formatted_string(task: dict, include_plan: bool = True, include_status: bool = True, include_steps: bool = True) -> str`**
+**`get_task_as_formatted_string(task: dict, include_plan: bool = True, include_current_step: bool = True, include_status: bool = True, include_steps: bool = True) -> str`**
 
     Returns a string representation of the task, including the plan, status, and steps based on the arguments provided.
 
     *Example:*
 
     ```python
-    task_string = get_task_as_formatted_string(task, include_plan=True, include_status=True, include_steps=True)
+    task_string = get_task_as_formatted_string(task, include_plan=True, include_current_step=True, include_status=True, include_steps=True)
     print(task_string)
     ```
 

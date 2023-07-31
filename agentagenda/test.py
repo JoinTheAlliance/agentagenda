@@ -237,6 +237,7 @@ def test_get_task_as_formatted_string():
     expected_string = (
         "Plan: Plan 1\n"
         "Status: in_progress\n"
+        "Current Step: Step 1\n"
         "Steps: Step 1: Not completed, Step 2: Not completed"
     )
     assert task_string == expected_string

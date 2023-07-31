@@ -83,7 +83,7 @@ def create_task(goal, plan=None, steps=None, model="gpt-3.5-turbo-0613"):
 
         for step in steps:
             step_items.append({"content": step, "completed": False})
-        
+
         steps = step_items
 
     # if steps is a dict, json stringify it
@@ -539,7 +539,11 @@ def get_next_step(task):
 
 
 def get_task_as_formatted_string(
-    task, include_plan=True, include_status=True, include_steps=True
+    task,
+    include_current_step=True,
+    include_plan=True,
+    include_status=True,
+    include_steps=True,
 ):
     """
     This function will return a string representation of the task,
@@ -556,10 +560,16 @@ def get_task_as_formatted_string(
     if include_status:
         task_details.append("Status: {}".format(task["metadata"]["status"]))
 
-    if include_steps:
-        # For the steps, since it's a list, we need to format each step separately
-        steps = json.loads(task["metadata"]["steps"])
+    # For the steps, since it's a list, we need to format each step separately
+    steps = json.loads(task["metadata"]["steps"])
 
+    if include_current_step:
+        # find the first step that isn't completed
+        current_step = get_next_step(task)
+        if current_step is not None:
+            task_details.append("Current Step: {}".format(current_step["content"]))
+
+    if include_steps:
         formatted_steps = ", ".join(
             [
                 "{}: {}".format(
