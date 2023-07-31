@@ -553,6 +553,8 @@ def get_task_as_formatted_string(
     # Define an empty list to store the task details
     task_details = []
 
+    task_details.append("Current Task: {}".format(task["metadata"]["goal"]))
+
     # Append each detail to the list based on the arguments
     if include_plan:
         task_details.append("Plan: {}".format(task["metadata"]["plan"]))
