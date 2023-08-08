@@ -6,6 +6,10 @@ An agenda and task manager for your agent.
 
 [![Lint and Test](https://github.com/AutonomousResearchGroup/agentagenda/actions/workflows/test.yml/badge.svg)](https://github.com/AutonomousResearchGroup/agentagenda/actions/workflows/test.yml)
 [![PyPI version](https://badge.fury.io/py/agentagenda.svg)](https://badge.fury.io/py/agentagenda)
+[![License](https://img.shields.io/badge/License-MIT-blue)](https://github.com/AutonomousResearchGroup/agentagenda/blob/main/LICENSE)
+[![stars - agentagenda](https://img.shields.io/github/stars/AutonomousResearchGroup/agentagenda?style=social)](https://github.com/AutonomousResearchGroup/agentagenda)
+[![forks - agentagenda](https://img.shields.io/github/forks/AutonomousResearchGroup/agentagenda?style=social)](https://github.com/AutonomousResearchGroup/agentagenda)
+
 
 ## Installation
 
