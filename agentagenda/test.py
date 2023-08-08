@@ -155,8 +155,6 @@ def test_update_plan():
     plan = "New plan"
     update_plan(task, plan)
     updated_task = get_memory("task", task["id"])
-    print('updated_task')
-    print(updated_task)
     assert updated_task["metadata"]["plan"] == plan
     teardown()
 
@@ -224,6 +222,7 @@ def test_get_task_as_formatted_string():
         "metadata": {
             "plan": "Plan 1",
             "status": "in_progress",
+            "goal": "Test goal",
             "steps": json.dumps(
                 [
                     {"content": "Step 1", "completed": False},
@@ -235,6 +234,7 @@ def test_get_task_as_formatted_string():
 
     task_string = get_task_as_formatted_string(task)
     expected_string = (
+        "Current Task: Test goal\n"
         "Plan: Plan 1\n"
         "Status: in_progress\n"
         "Current Step: Step 1\n"
@@ -274,10 +274,6 @@ def test_list_tasks_as_formatted_string():
     # Check if tasks_string includes all tasks
     for task in tasks:
         task_string = get_task_as_formatted_string(task)
-        print("*** task_string is")
-        print(task_string)
-        print("***  tasks_string")
-        print(tasks_string)
         assert task_string in tasks_string
 
     # Teardown: Remove all tasks
